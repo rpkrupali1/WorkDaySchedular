@@ -10,13 +10,16 @@ var hourChecker = function(){
     //loop through every hour in calendar block and add cllases after comparing with current hour
     $(".time-block").each(function(){
         var timeBlock = parseInt($(this).attr("id")); //get id as id's are given for each hour
+        //for past hour
         if(timeBlock < currentHour){
             $(this).addClass("past");
         }
+        //for present hour
         else if (timeBlock===currentHour){
             $(this).removeClass("past");
             $(this).addClass("present");
         }
+        //for future hour
         else {
             $(this).removeClass("past");
             $(this).removeClass("present");
@@ -25,14 +28,12 @@ var hourChecker = function(){
     });
 };
 
-
 //save events in local storage
 var loadEvent = function(id,text){
     events = JSON.parse(window.localStorage.getItem("events")) || {}
     $.each(events,function(hour,description){
         $('#' + hour).find("textarea").val(description);
     })
-    
 }
 
 var saveEvent = function() {
@@ -52,7 +53,6 @@ loadEvent();
 $(".saveBtn").click(function(){
     var parenEl = $(this).parent();
     var id = $(parenEl).attr("id"); //get current hour
-    var text = $(parenEl).find("textarea").val().trim(); //get text    
+    var text = $(parenEl).find("textarea").val().trim(); //get text
     createEvent(id,text);
 });
-
